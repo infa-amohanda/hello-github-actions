@@ -17,7 +17,7 @@ jobs:
   ci:
     strategy:
       matrix:
-        apps: ["logger-service", "authorization-service", "configuration-manager-service"]
+        apps: ["configuration-manager-service"]
     runs-on: ubuntu-latest
     steps:
       
@@ -54,5 +54,9 @@ jobs:
           echo "Trigger spinnaker pipeline"
           
       - uses: jfrog/setup-jfrog-cli@v1
-      - run: jfrog --version
+        env:
+          JF_ARTIFACTORY_1: eyJ2ZXJzaW9uIjoxLCJ1cmwiOiJodHRwczovL2FydGlmYWN0cy5jbG91ZHRydXN0LnJvY2tzLyIsInVzZXIiOiJkZXBsb3lib3QiLCJwYXNzd29yZCI6IkFQQXVWczRLQlNXeWVtY01xNndnVWZqcmZXYyIsInRva2VuUmVmcmVzaEludGVydmFsIjo2MCwic2VydmVySWQiOiJDbG91ZFRydXN0In0=
+      - run: |
+          jfrog --version
+          jfrog rt ping
           
