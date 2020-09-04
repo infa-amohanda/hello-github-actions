@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "Pre-Build"
           echo $DEV_REPO
+          echo $GITHUB_WORKSPACE
           
       # Build docker image      
       - name: build
