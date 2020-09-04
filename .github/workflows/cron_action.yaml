@@ -24,7 +24,7 @@ jobs:
       - name: Pre-Build
         run: |
           echo "Pre-Build"
-          echo ${DEV_REPO}
+          echo $DEV_REPO
           
       # Build docker image      
       - name: build
