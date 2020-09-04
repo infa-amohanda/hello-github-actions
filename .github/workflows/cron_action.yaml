@@ -15,24 +15,24 @@ jobs:
     steps:
       # Build docker image      
       - name: build
-      - run: |
+        run: |
           echo "Hello ${{ matrix.apps }}"
           echo "- Hey build
       
       # Scan docker image   
       - name: scan
-      - run: |
+        run: |
           echo "Hello ${{ matrix.apps }}"
           echo "- Hey scan"
       
       # Deploy docker image   
       - name: deploy
-      - run: |
+        run: |
           echo "Hello ${{ matrix.apps }}"
           echo "- Hey deploy"
       
       # Trigger spinnaker pipeline       
       - name: trigger
-      - run: |
+        run: |
           echo "Trigger spinnaker pipeline"
           
