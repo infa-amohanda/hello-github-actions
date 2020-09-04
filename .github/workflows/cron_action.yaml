@@ -6,6 +6,10 @@ on:
       
   workflow_dispatch:
 
+env:
+  DEV_REPO: ct-docker-dev.artifacts.cloudtrust.rocks
+  PROD_REPO: ct-docker.artifacts.cloudtrust.rocks
+  
 jobs:
   ci:
     strategy:
@@ -20,6 +24,7 @@ jobs:
       - name: Pre-Build
         run: |
           echo "Pre-Build"
+          echo ${{ env.DEV_REPO }}
           
       # Build docker image      
       - name: build
