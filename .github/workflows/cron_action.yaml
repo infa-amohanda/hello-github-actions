@@ -17,7 +17,7 @@ jobs:
       - name: build
         run: |
           echo "Hello ${{ matrix.apps }}"
-          echo "- Hey build
+          echo "- Hey build"
       
       # Scan docker image   
       - name: scan
