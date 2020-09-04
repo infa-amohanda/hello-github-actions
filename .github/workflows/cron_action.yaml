@@ -3,16 +3,24 @@ on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron: '0 0 * * *'
+      
   workflow_dispatch:
 
-
 jobs:
-  build:
+  ci:
     strategy:
       matrix:
         apps: ["logger-service", "authorization-service", "configuration-manager-service"]
     runs-on: ubuntu-latest
     steps:
+      
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Pre-Build
+        run: |
+          echo "Pre-Build"
+          
       # Build docker image      
       - name: build
         run: |
