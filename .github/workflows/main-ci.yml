@@ -1,0 +1,50 @@
+name: Build, Scan and Deploy Docker Images
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '0 0 * * *'
+
+  workflow_dispatch:
+
+env:
+  DEV_REPO: ct-docker-dev.artifacts.cloudtrust.rocks
+  PROD_REPO: ct-docker.artifacts.cloudtrust.rocks
+
+jobs:
+  stages:
+    strategy:
+      matrix:
+        apps: ["logger-service", "authorization-service", "configuration-manager-service"]
+    runs-on: ct-centos8-1
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Pre-Build
+        run: |
+          cd ${GITHUB_WORKSPACE}/scripts/
+
+          TARGET_REPO=$(echo ${DEV_REPO} | cut -d'.' -f 1)
+          python metadata.py ${{ secrets.JFROG_API_TOKEN }} ${TARGET_REPO} "hawk/${{ matrix.apps }}"
+
+          VERSION=`cat ${GITHUB_WORKSPACE}/docker-files/ct-release | grep "#Version" | cut -d' ' -f 3`
+          echo "CT_VERSION=${VERSION}" > ${GITHUB_WORKSPACE}/image-build.properties
+
+          # Download war/jar files from artifactory.
+          bash -x ${GITHUB_WORKSPACE}/hawk/scripts/download_artifacts.sh ${{ matrix.apps }} ${{ secrets.JFROG_API_TOKEN }}
+
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${DEV_REPO}/hawk/${{ matrix.apps }}
+          tags: latest, $VERSION
+
+      # Build docker image
+#      - name: build
+#        run: |
+#          # Building docker image
+#          docker image build -t ${DockerDevRepoName}/hawk/${SERVICE}:$VERSION . | tee ${WORKSPACE}/docker-build-${SERVICE////-}-${BUILD_DATETIME}.txt
+#          docker tag ${DockerDevRepoName}/hawk/${SERVICE}:$VERSION ${DockerDevRepoName}/hawk/${SERVICE}:latest
+
