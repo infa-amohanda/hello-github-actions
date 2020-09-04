@@ -3,12 +3,16 @@ name: Cron to work
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: '*/2 * * * *'
+    - cron: '*/10 * * * *'
   workflow_dispatch:
+  
 jobs:
   say_hello:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        apps: ["logger-service", "authorization-service", "configuration-manager-service"]
     steps:
     - run: |
-        echo "Hello Aakash"
+        echo "Hello ${{ matrix.apps }}"
         echo "- Hey Anju"
