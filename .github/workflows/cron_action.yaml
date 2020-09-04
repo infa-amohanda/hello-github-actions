@@ -3,10 +3,8 @@ name: Cron to work
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '*/2 * * * *'
-
-
-
+    - cron: '*/2 * * * *'
+  workflow_dispatch:
 jobs:
   say_hello:
     runs-on: ubuntu-latest
