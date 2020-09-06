@@ -52,14 +52,7 @@ jobs:
       - name: trigger
         run: |
           echo "Trigger spinnaker pipeline"
-          
-      - uses: jfrog/setup-jfrog-cli@v1
-        env:
-          JF_ARTIFACTORY_1: eyJ2ZXJzaW9uIjoxLCJ1cmwiOiJodHRwczovL2FydGlmYWN0cy5jbG91ZHRydXN0LnJvY2tzLyIsInVzZXIiOiJkZXBsb3lib3QiLCJwYXNzd29yZCI6IkFQQXVWczRLQlNXeWVtY01xNndnVWZqcmZXYyIsInRva2VuUmVmcmVzaEludGVydmFsIjo2MCwic2VydmVySWQiOiJDbG91ZFRydXN0In0=
-      - run: |
-          jfrog --version
-          jfrog rt ping
-          
+
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
