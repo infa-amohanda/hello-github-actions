@@ -56,5 +56,6 @@ jobs:
       - name: Invoke workflow without inputs
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: First Workflow
+          workflow: Manually triggered workflow
           token: ${{ secrets.AK_PERSONAL_TOKEN }}
+          inputs: '{ "name": "blah blah"}'
