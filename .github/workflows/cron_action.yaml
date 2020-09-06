@@ -60,3 +60,8 @@ jobs:
           jfrog --version
           jfrog rt ping
           
+      - name: Invoke workflow without inputs
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: First Workflow
+          token: ${{ secrets.AK_PERSONAL_TOKEN }}
